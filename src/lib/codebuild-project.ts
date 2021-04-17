@@ -75,7 +75,7 @@ export class CodebuildProject extends cdk.Construct {
       timeout: cdk.Duration.minutes(10),
     });
     this.buildProject.role?.addManagedPolicy(
-      iam.ManagedPolicy.fromAwsManagedPolicyName('AWSElasticBeanstalkFullAccess'),
+      iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess-AWSElasticBeanstalk'),
     );
     this.buildProject.role?.addToPrincipalPolicy(new iam.PolicyStatement({
       resources: ['*'],
