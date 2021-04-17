@@ -19,4 +19,4 @@ const devEnv = {
 validateEnvVariables();
 const app = new App();
 
-new InfraPipelineStack(app, `${envVars.REPO_NAME}-stack`, { env: devEnv } );
+new InfraPipelineStack(app, `${envVars.REPO_NAME}`, { env: devEnv } );
