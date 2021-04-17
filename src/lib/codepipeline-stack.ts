@@ -15,12 +15,13 @@ export class CodepipelineStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: CodepipelineStackProps) {
     super(scope, id, props);
 
+    // ToDo : apply s3 bucket lifecycle
     const bucket = new s3.Bucket(this, 'Bucket', { bucketName: `${props.project}-${props.appName}`, versioned: true });
 
     /**
      * 1. Create CodePipeline
      */
-    const pipeline = new codepipeline.Pipeline(this, 'EBCodePipeline');
+    const pipeline = new codepipeline.Pipeline(this, 'Codepipeline');
 
     /**
       * 1.1 Add Source Stage to pipeline
@@ -32,7 +33,7 @@ export class CodepipelineStack extends cdk.Stack {
     const sourceOutput = new codepipeline.Artifact('Source');
 
     const sourceAction = new codepipeline_actions.S3SourceAction({
-      actionName: 'SourceFromS3',
+      actionName: 'S3',
       //bucket: s3.Bucket.fromBucketName(this, 'Bucket', `${props.project}-${props.appName}`),
       bucket: bucket,
       output: sourceOutput,
@@ -55,13 +56,18 @@ export class CodepipelineStack extends cdk.Stack {
       */
     sourceStage.addAction(sourceAction);
 
-    const devProject = new CodebuildProject(this, 'DeployDev', { project: props.project, appName: props.appName, stage: 'dev' }) ;
+    const devProject = new CodebuildProject(this, 'DeployDev', {
+      project: props.project,
+      appName: props.appName,
+      stage: 'dev',
+      versionId: sourceAction.variables.versionId,
+    }) ;
 
     const buildStage = pipeline.addStage({
       stageName: 'DeployDev',
     });
     const buildAction = new codepipeline_actions.CodeBuildAction({
-      actionName: 'Build',
+      actionName: 'Deploy',
       input: sourceOutput,
       project: devProject.buildProject,
       type: codepipeline_actions.CodeBuildActionType.BUILD,
@@ -77,19 +83,24 @@ export class CodepipelineStack extends cdk.Stack {
       notifyEmails: ['jingood2@gmail.com'],
     }));
 
-    /* const deployProdStage = pipeline.addStage({
+    const deployProdStage = pipeline.addStage({
       stageName: 'DeployOnProd',
     });
 
-    const prodProject = new DeployProject(this, 'DeployProd', { project: props.project, appName: props.appName, stage: 'prod' }) ;
+    const prodProject = new CodebuildProject(this, 'DeployProd', {
+      project: props.project,
+      appName: props.appName,
+      stage: 'prod',
+      versionId: sourceAction.variables.versionId,
+    } ) ;
 
     const prodAction = new codepipeline_actions.CodeBuildAction({
-      actionName: 'Build',
+      actionName: 'Deploy',
       input: sourceOutput,
       project: prodProject.buildProject,
       type: codepipeline_actions.CodeBuildActionType.BUILD,
     });
-    deployProdStage.addAction(prodAction); */
+    deployProdStage.addAction(prodAction);
 
   }
 }

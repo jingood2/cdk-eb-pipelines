@@ -6,6 +6,7 @@ export interface CodebuildProjectProps {
   project: string;
   appName: string;
   stage: string;
+  versionId: string;
 }
 
 export class CodebuildProject extends cdk.Construct {
@@ -36,8 +37,6 @@ export class CodebuildProject extends cdk.Construct {
               'ls',
               //'copy *.war ${props.appName}-${props.stage}.war',
               //'export WAR_NAME=${EB_APP_NAME}.war',
-              'export EB_VERSION=`date +%s`',
-              'env',
               'aws elasticbeanstalk create-application-version --application-name ${EB_APP_NAME} --version-label ${EB_VERSION} --source-bundle S3Bucket=${BUCKET_NAME},S3Key=${WAR_NAME}',
               'aws elasticbeanstalk update-environment --application-name ${EB_APP_NAME} --version-label ${EB_VERSION} --environment-name ${EB_STAGE}',
             ],
@@ -65,6 +64,9 @@ export class CodebuildProject extends cdk.Construct {
           },
           WAR_NAME: {
             value: `${props.appName}.war`,
+          },
+          EB_VERSION: {
+            value: `${props.versionId}`,
           },
         },
       },
