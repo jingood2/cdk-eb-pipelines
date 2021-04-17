@@ -1,5 +1,5 @@
 import { App, Construct, Stack, StackProps } from '@aws-cdk/core';
-import { envVars } from './lib/config';
+import { envVars, validateEnvVariables } from './lib/config';
 import { InfraPipelineStack } from './lib/infra-pipeline-stack';
 
 export class MyStack extends Stack {
@@ -16,6 +16,7 @@ const devEnv = {
   region: process.env.CDK_DEFAULT_REGION || process.env.CDK_DEPLOY_ACCOUNT,
 };
 
+validateEnvVariables();
 const app = new App();
 
 new InfraPipelineStack(app, `${envVars.REPO_NAME}-stack`, { env: devEnv } );

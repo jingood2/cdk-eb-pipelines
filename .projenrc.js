@@ -21,10 +21,11 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/aws-s3',
     '@aws-cdk/aws-events',
   ], /* Which AWS CDK modules (those that start with "@aws-cdk/") this app uses. */
-  cdkVersionPinning: {
+  //cdkVersionPinning: false,
+  /* Use pinned version instead of caret version for CDK. */
+  context: {
     '@aws-cdk/core:newStyleStackSynthesis': true,
-  }, /* Use pinned version instead of caret version for CDK. */
-  // context: undefined,                                                       /* Additional context to include in `cdk.json`. */
+  }, /* Additional context to include in `cdk.json`. */
   // requireApproval: CdkApprovalLevel.BROADENING,                             /* To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. */
 
   /* NodePackageOptions */
