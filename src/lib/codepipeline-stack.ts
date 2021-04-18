@@ -109,6 +109,14 @@ export class CodepipelineStack extends cdk.Stack {
     });
     deployProdStage.addAction(prodAction);
 
+    // CloudZ Tags
+    cdk.Tags.of(this).add('cz-project', 'magicmall' );
+    cdk.Tags.of(this).add('cz-org', 'skmg');
+    cdk.Tags.of(this).add('cz-customer', 'LeeSungik' );
+    cdk.Tags.of(this).add('cz-ext1', ' ' );
+    cdk.Tags.of(this).add('cz-ext2', ' ' );
+    cdk.Tags.of(this).add('cz-ext3', ' ' );
+
   }
 }
 
