@@ -5,6 +5,7 @@ import * as cdk from '@aws-cdk/core';
 //import { envVars } from '../config';
 import { CodebuildProject } from './codebuild-project';
 import { envVars } from './config';
+import * as moment from 'moment';
 
 export interface CodepipelineStackProps extends cdk.StackProps {
   project: string;
@@ -47,7 +48,7 @@ export class CodepipelineStack extends cdk.Stack {
       trigger: codepipeline_actions.S3Trigger.POLL,
     });
 
-    const BUILD_VERSION = new Date().toLocaleString();
+    const BUILD_VERSION = moment().format();
 
     /* const sourceAction = new codepipeline_actions.GitHubSourceAction({
       actionName: 'Source',
