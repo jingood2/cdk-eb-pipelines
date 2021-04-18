@@ -4,6 +4,7 @@ import * as s3 from '@aws-cdk/aws-s3';
 import * as cdk from '@aws-cdk/core';
 //import { envVars } from '../config';
 import { CodebuildProject } from './codebuild-project';
+import { envVars } from './config';
 
 export interface CodepipelineStackProps extends cdk.StackProps {
   project: string;
@@ -12,8 +13,6 @@ export interface CodepipelineStackProps extends cdk.StackProps {
 }
 
 export class CodepipelineStack extends cdk.Stack {
-
-  readonly BUILD_VERSION: string;
 
   constructor(scope: cdk.Construct, id: string, props: CodepipelineStackProps) {
     super(scope, id, props);
@@ -48,7 +47,7 @@ export class CodepipelineStack extends cdk.Stack {
       trigger: codepipeline_actions.S3Trigger.POLL,
     });
 
-    this.BUILD_VERSION = new Date().toLocaleString();
+    const BUILD_VERSION = Date.now.toString();
 
     /* const sourceAction = new codepipeline_actions.GitHubSourceAction({
       actionName: 'Source',
@@ -69,7 +68,7 @@ export class CodepipelineStack extends cdk.Stack {
       project: props.project,
       appName: props.appName,
       stage: 'dev',
-      versionId: this.BUILD_VERSION,
+      versionId: BUILD_VERSION,
     }) ;
 
     const buildStage = pipeline.addStage({
@@ -89,7 +88,7 @@ export class CodepipelineStack extends cdk.Stack {
 
     approvalStage.addAction(new codepipeline_actions.ManualApprovalAction({
       actionName: 'ManualApproval',
-      notifyEmails: ['jingood2@gmail.com'],
+      notifyEmails: envVars.APPROVAL_NOTI_EMAILS,
     }));
 
     const deployProdStage = pipeline.addStage({
@@ -100,7 +99,7 @@ export class CodepipelineStack extends cdk.Stack {
       project: props.project,
       appName: props.appName,
       stage: 'prod',
-      versionId: this.BUILD_VERSION,
+      versionId: BUILD_VERSION,
     } ) ;
 
     const prodAction = new codepipeline_actions.CodeBuildAction({

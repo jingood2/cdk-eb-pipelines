@@ -34,9 +34,9 @@ export class CodebuildProject extends cdk.Construct {
           build: {
             commands: [
               'echo build started on `date +%s`',
-              'ls',
               //'copy *.war ${props.appName}-${props.stage}.war',
               //'export WAR_NAME=${EB_APP_NAME}.war',
+              'env',
               'aws elasticbeanstalk create-application-version --application-name ${EB_APP_NAME} --version-label ${EB_VERSION} --source-bundle S3Bucket=${BUCKET_NAME},S3Key=${WAR_NAME}',
               'aws elasticbeanstalk update-environment --application-name ${EB_APP_NAME} --version-label ${EB_VERSION} --environment-name ${EB_STAGE}',
             ],
