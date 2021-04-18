@@ -19,7 +19,7 @@ export class CodepipelineStack extends cdk.Stack {
 
     // ToDo : apply s3 bucket lifecycle
     var bucket = s3.Bucket.fromBucketName(this, 'BucketByName', `${props.project}-${props.appName}`);
-    if (bucket === null) {
+    if (bucket.bucketName === undefined) {
       bucket = new s3.Bucket(this, 'Bucket', { bucketName: `${props.project}-${props.appName}`, versioned: true });
     }
 
