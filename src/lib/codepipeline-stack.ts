@@ -48,7 +48,7 @@ export class CodepipelineStack extends cdk.Stack {
       trigger: codepipeline_actions.S3Trigger.POLL,
     });
 
-    const BUILD_VERSION = moment().format();
+    const BUILD_VERSION = cdk.Lazy.string( { produce: () => sourceAction.variables.versionId });
 
     /* const sourceAction = new codepipeline_actions.GitHubSourceAction({
       actionName: 'Source',
