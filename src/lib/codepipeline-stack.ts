@@ -67,7 +67,7 @@ export class CodepipelineStack extends cdk.Stack {
       project: props.project,
       appName: props.appName,
       stage: 'dev',
-      versionId: sourceAction.variables.versionId.slice(5),
+      versionId: sourceAction.variables.versionId,
     }) ;
 
     const buildStage = pipeline.addStage({
@@ -98,7 +98,7 @@ export class CodepipelineStack extends cdk.Stack {
       project: props.project,
       appName: props.appName,
       stage: 'prod',
-      versionId: sourceAction.variables.versionId.slice(5),
+      versionId: sourceAction.variables.versionId,
     } ) ;
 
     const prodAction = new codepipeline_actions.CodeBuildAction({
