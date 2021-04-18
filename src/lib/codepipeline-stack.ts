@@ -12,11 +12,16 @@ export interface CodepipelineStackProps extends cdk.StackProps {
 }
 
 export class CodepipelineStack extends cdk.Stack {
+  public readonly BUILD_VERSION:string;
+
   constructor(scope: cdk.Construct, id: string, props: CodepipelineStackProps) {
     super(scope, id, props);
 
     // ToDo : apply s3 bucket lifecycle
-    const bucket = new s3.Bucket(this, 'Bucket', { bucketName: `${props.project}-${props.appName}`, versioned: true });
+    var bucket = s3.Bucket.fromBucketName(this, 'BucketByName', `${props.project}-${props.appName}`);
+    if (bucket === undefined) {
+      bucket = new s3.Bucket(this, 'Bucket', { bucketName: `${props.project}-${props.appName}`, versioned: true });
+    }
 
     /**
      * 1. Create CodePipeline
@@ -41,6 +46,8 @@ export class CodepipelineStack extends cdk.Stack {
       trigger: codepipeline_actions.S3Trigger.POLL,
     });
 
+    this.BUILD_VERSION = sourceAction.variables.versionId.slice(5);
+
     /* const sourceAction = new codepipeline_actions.GitHubSourceAction({
       actionName: 'Source',
       owner: envVars.REPO_OWNER,
@@ -60,7 +67,7 @@ export class CodepipelineStack extends cdk.Stack {
       project: props.project,
       appName: props.appName,
       stage: 'dev',
-      versionId: sourceAction.variables.versionId,
+      versionId: this.BUILD_VERSION,
     }) ;
 
     const buildStage = pipeline.addStage({
@@ -91,7 +98,7 @@ export class CodepipelineStack extends cdk.Stack {
       project: props.project,
       appName: props.appName,
       stage: 'prod',
-      versionId: sourceAction.variables.versionId,
+      versionId: this.BUILD_VERSION,
     } ) ;
 
     const prodAction = new codepipeline_actions.CodeBuildAction({
