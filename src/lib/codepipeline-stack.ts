@@ -12,7 +12,6 @@ export interface CodepipelineStackProps extends cdk.StackProps {
 }
 
 export class CodepipelineStack extends cdk.Stack {
-  public readonly BUILD_VERSION:string;
 
   constructor(scope: cdk.Construct, id: string, props: CodepipelineStackProps) {
     super(scope, id, props);
@@ -47,7 +46,7 @@ export class CodepipelineStack extends cdk.Stack {
       trigger: codepipeline_actions.S3Trigger.POLL,
     });
 
-    this.BUILD_VERSION = sourceAction.variables.versionId.slice(5);
+    //this.BUILD_VERSION = sourceAction.variables.versionId.slice(5);
 
     /* const sourceAction = new codepipeline_actions.GitHubSourceAction({
       actionName: 'Source',
@@ -68,7 +67,7 @@ export class CodepipelineStack extends cdk.Stack {
       project: props.project,
       appName: props.appName,
       stage: 'dev',
-      versionId: this.BUILD_VERSION,
+      versionId: sourceAction.variables.versionId.slice(5),
     }) ;
 
     const buildStage = pipeline.addStage({
@@ -99,7 +98,7 @@ export class CodepipelineStack extends cdk.Stack {
       project: props.project,
       appName: props.appName,
       stage: 'prod',
-      versionId: this.BUILD_VERSION,
+      versionId: sourceAction.variables.versionId.slice(5),
     } ) ;
 
     const prodAction = new codepipeline_actions.CodeBuildAction({
