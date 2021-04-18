@@ -5,7 +5,7 @@ import * as cdk from '@aws-cdk/core';
 //import { envVars } from '../config';
 import { CodebuildProject } from './codebuild-project';
 import { envVars } from './config';
-import * as moment from 'moment';
+//import * as moment from 'moment';
 
 export interface CodepipelineStackProps extends cdk.StackProps {
   project: string;
