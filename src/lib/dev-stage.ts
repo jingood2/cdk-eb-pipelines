@@ -10,9 +10,21 @@ export class DevStage extends cdk.Stage {
     super(scope, id, props);
 
     // Add stack that you want to delivery
-    new CodepipelineStack(this, 'familymall', { project: 'magicmall', appName: 'familymall' } );
+    // magicmall codepipeline
+    new CodepipelineStack(this, 'magic-pipeline', { project: 'magicmall', appName: 'magic' } );
+    new CodepipelineStack(this, 'mmagic-pipeline', { project: 'magicmall', appName: 'mmagic' } );
 
-    new CodepipelineStack(this, 'mfamilymall', { project: 'magicmall', appName: 'mfamilymall' } );
+    // familymall codepipeline
+    new CodepipelineStack(this, 'family-pipeline', { project: 'magicmall', appName: 'family' } );
+    new CodepipelineStack(this, 'mfamily-pipeline', { project: 'magicmall', appName: 'mfamily' } );
 
+    new CodepipelineStack(this, 'mcmall-pipeline', { project: 'magicmall', appName: 'mcmall' } );
+    new CodepipelineStack(this, 'mmcmall-pipeline', { project: 'magicmall', appName: 'mmcmall' } );
+
+    new CodepipelineStack(this, 'staff-pipeline', { project: 'magicmall', appName: 'staff' } );
+    new CodepipelineStack(this, 'api-pipeline', { project: 'magicmall', appName: 'api' } );
+
+    new CodepipelineStack(this, 'partner-pipeline', { project: 'magicmall', appName: 'partner' } );
+    new CodepipelineStack(this, 'mpartner-pipeline', { project: 'magicmall', appName: 'mpartner' } );
   }
 }
