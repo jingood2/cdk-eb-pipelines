@@ -8,7 +8,7 @@ export const envVars = {
   REPO_NAME: process.env.REPO_NAME || 'magicmall-eb-codepipeline-stack',
   BUILD_BRANCH: process.env.BUILD_BRANCH || 'main',
   APPROVAL_NOTI_EMAILS: [
-    'jignood2@gmail.com',
+    'TSS_TYSP4098@tongyang.co.kr', 'TSS_TYSP4059@tongyang.co.kr', 'TSS_TYSP4070@tongyang.co.kr',
   ],
   DEV_STAGE_ENV: {
   },

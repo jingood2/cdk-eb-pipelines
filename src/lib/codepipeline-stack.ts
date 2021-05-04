@@ -92,6 +92,38 @@ export class CodepipelineStack extends cdk.Stack {
       notifyEmails: envVars.APPROVAL_NOTI_EMAILS,
     }));
 
+    //
+
+    const deployStgStage = pipeline.addStage({
+      stageName: 'DeployOnStg',
+    });
+
+    const stgProject = new CodebuildProject(this, 'DeployStg', {
+      project: props.project,
+      appName: props.appName,
+      stage: 'stg',
+      versionId: BUILD_VERSION,
+    } ) ;
+
+    const stgAction = new codepipeline_actions.CodeBuildAction({
+      actionName: 'Deploy',
+      input: sourceOutput,
+      project: stgProject.buildProject,
+      type: codepipeline_actions.CodeBuildActionType.BUILD,
+    });
+    deployStgStage.addAction(stgAction);
+
+    deployStgStage.addAction(stgAction);
+    const approvalStgStage = pipeline.addStage({
+      stageName: 'Approval',
+    });
+
+    approvalStgStage.addAction(new codepipeline_actions.ManualApprovalAction({
+      actionName: 'ManualApproval',
+      notifyEmails: envVars.APPROVAL_NOTI_EMAILS,
+    }));
+
+
     const deployProdStage = pipeline.addStage({
       stageName: 'DeployOnProd',
     });
