@@ -114,10 +114,10 @@ export class CodepipelineStack extends cdk.Stack {
     deployStgStage.addAction(stgAction);
 
     const approvalStgStage = pipeline.addStage({
-      stageName: 'Approval',
+      stageName: 'ApprovalStg',
     });
     approvalStgStage.addAction(new codepipeline_actions.ManualApprovalAction({
-      actionName: 'ManualApproval',
+      actionName: 'ManualApprovalStg',
       notifyEmails: envVars.APPROVAL_NOTI_EMAILS,
     }));
 
