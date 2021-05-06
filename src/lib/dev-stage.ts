@@ -27,8 +27,8 @@ export class DevStage extends cdk.Stage {
     new CodepipelineStack(this, 'partner-pipeline', { project: 'magicmall', appName: 'partner' } );
     new CodepipelineStack(this, 'mpartner-pipeline', { project: 'magicmall', appName: 'mpartner' } );
 
-    new CodepipelineStack(this, 'mpartner-pipeline', { project: 'magicmall', appName: 'batch' } );
-    new CodepipelineStack(this, 'mpartner-pipeline', { project: 'magicmall', appName: 'bo' } );
+    new CodepipelineStack(this, 'batch-pipeline', { project: 'magicmall', appName: 'batch' } );
+    new CodepipelineStack(this, 'bo-pipeline', { project: 'magicmall', appName: 'bo' } );
 
   }
 }
