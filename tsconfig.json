@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "lib",
-    "alwaysStrict": true,
+    "alwaysStrict": false,
     "declaration": true,
     "experimentalDecorators": true,
     "inlineSourceMap": true,
