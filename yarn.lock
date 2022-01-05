@@ -2151,9 +2151,9 @@ cdk-assets@1.98.0:
     yargs "^16.2.0"
 
 cdk-assume-role-credential-plugin@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/cdk-assume-role-credential-plugin/-/cdk-assume-role-credential-plugin-1.2.2.tgz#b1a38a9bfe9dd243066e6778031845bb4bc8e8ad"
-  integrity sha512-y46SKpfzlAzHEkNqfbOBm9qjQ2uAkbu+XOKpiWVy+TACpi81lsAeNxcrK1jGFtu+LggLtq2al6NNcRT01pxisQ==
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/cdk-assume-role-credential-plugin/-/cdk-assume-role-credential-plugin-1.4.0.tgz#305d84287fef8dfd2d073c6dcb00e25c59d9dc52"
+  integrity sha512-wZvLzql6bittsJtEUa2zGF6GBo3Q/4fjv2YcxauzfGyDyI1l1MYzqLqfseOVj5GF4UpUUe75nCHv4O9n7qDpOQ==
   dependencies:
     "@types/yargs" "^15.0.12"
     aws-cdk "^1.87.0"
